@@ -17,9 +17,6 @@ Homestead.json
 
 composer.phar
 
-
-/tests
-/phpunit.xml
 .DS_Store
 
 
