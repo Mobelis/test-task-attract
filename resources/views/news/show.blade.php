@@ -43,13 +43,17 @@
 
         <div>
             @if($comments)
-                <ul style="list-style: none; padding: 0">
+                <ul class="comment-list" style="list-style: none; padding: 0">
                     @foreach($comments as $comment)
-                        <li class="panel-body">
+                        <li class="panel-body" id="com-{{$comment->id}}">
                             <div class="list-group">
                                 <div class="list-group-item">
                                     @if($comment->user)
-                                        <h3>{{ $comment->user->name }}</h3>
+                                        <h3>{{ $comment->user->name }}
+                                            @if(!Auth::guest() && ($comment->user_id == Auth::user()->id))
+                                                <button class="btn btn-default com-del" data-id="{{ $comment->id }}" data-token="{{ csrf_token() }}" style="float: right">{{trans('base.form-submit-delete')}}</button>
+                                            @endif
+                                        </h3>
                                     @else
                                         <h3>Bot</h3>
                                     @endif

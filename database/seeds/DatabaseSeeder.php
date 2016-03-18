@@ -21,7 +21,7 @@ class NewsTableSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('News')->delete();
+        DB::table('news')->delete();
         DB::statement("ALTER TABLE news AUTO_INCREMENT=1");
 
         News::create([

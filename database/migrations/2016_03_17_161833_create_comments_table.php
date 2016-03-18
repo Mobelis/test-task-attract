@@ -22,7 +22,7 @@ class CreateCommentsTable extends Migration
 
         Schema::table('comments', function($table) {
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('news_id')->references('id')->on('news');
+            $table->foreign('news_id')->references('id')->on('news')->onDelete('cascade');
         });
     }
 

@@ -43,7 +43,7 @@ Route::group(['middleware' => ['web','auth']], function()
     Route::get('add-news',  ['as' => 'news.create', 'uses' => 'NewsController@create']);
 
     // save new news
-    Route::post('add-news', ['as' => 'news.store', 'uses' => 'NewsController@store', 'before' => 'csrf']);
+    Route::post('add-news', ['as' => 'news.store', 'uses' => 'NewsController@store']);
 
     // edit post form
     Route::get('edit/{slug}','NewsController@edit');
@@ -53,5 +53,8 @@ Route::group(['middleware' => ['web','auth']], function()
 
     // add comment
     Route::post('comment/add','CommentController@store');
+
+    // delete comment
+    Route::post('comment/delete',['as' => 'comment.delete', 'uses' => 'CommentController@destroy']);
 
 });

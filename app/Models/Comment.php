@@ -44,5 +44,15 @@ class Comment extends Model
             }
             return true;
         });
+
+        static::saved(function($model) {
+            News::find($model->news_id)->increment('col_comment');
+            return true;
+        });
+        
+        static::deleted(function($model) {
+            News::find($model->news_id)->decrement('col_comment');
+            return true;
+        });
     }
 }

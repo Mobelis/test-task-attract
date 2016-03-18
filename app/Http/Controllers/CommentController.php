@@ -84,10 +84,27 @@ class CommentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param Comment $modelComment
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $modelComment,Request $request)
     {
-        //
+        $data['success']=false;
+        $id = $request->get('id');
+
+        $comment = $modelComment::find($id);
+        if($comment && ($comment->user_id == $request->user()->id))
+        {
+            $comment->delete();
+            $data['message'] = 'Post deleted Successfully';
+            $data['success']=true;
+        }
+        else
+        {
+            $data['errors'] = 'Invalid Operation. You have not sufficient permissions';
+        }
+
+        return $data;
     }
 }

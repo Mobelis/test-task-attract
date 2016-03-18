@@ -26,7 +26,7 @@ class CreateNewsTable extends Migration
         });
 
         Schema::table('news', function($table) {
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         //DB::table('News')->delete();
@@ -67,7 +67,7 @@ class CreateNewsTable extends Migration
             ]
         ];
 
-        DB::table('News')->insert($NewsData);
+        DB::table('news')->insert($NewsData);
     }
 
     /**
