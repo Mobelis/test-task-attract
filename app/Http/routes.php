@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +23,35 @@ Route::get('/', function () {
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
-    //
+Route::controllers([
+  'auth' => 'Auth\AuthController',
+  'password' => 'Auth\PasswordController',
+]);
+
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+    Route::get('/',     ['as' => 'home', 'uses' => 'NewsController@index']);
+    Route::get('/home', ['as' => 'home', 'uses' => 'NewsController@index']);
+    // display single news
+    Route::get('/news/{slug}',['as' => 'news.show', 'uses' => 'NewsController@show'])->where('slug', '[A-Za-z0-9-_]+');
+});
+
+Route::group(['middleware' => ['web','auth']], function()
+{
+    // show new news form
+    Route::get('add-news',  ['as' => 'news.create', 'uses' => 'NewsController@create']);
+
+    // save new news
+    Route::post('add-news', ['as' => 'news.store', 'uses' => 'NewsController@store', 'before' => 'csrf']);
+
+    // edit post form
+    Route::get('edit/{slug}','NewsController@edit');
+
+    // update post
+    //Route::post('update','NewsController@update');
+
+    // add comment
+    Route::post('comment/add','CommentController@store');
+
 });

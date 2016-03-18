@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Attract\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -23,4 +23,17 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function getName1Attribute($value)
+    {
+        
+    }
+
+    // user has many posts
+    public function news()
+    {
+        return $this->hasMany('Attract\Models\News','user_id');
+    }
 }
+
