@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Attract\Models\News;
+use Attract\Models\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
         $this->call(NewsTableSeeder::class);
     }
 }
@@ -49,6 +50,23 @@ class NewsTableSeeder extends Seeder {
             'content' => 'Lorem ipsum dolor sit amet, no dico mediocritatem his, modo lobortis eu est. An sonet utamur recteque vel, ei unum similique ullamcorper eum, vis delectus consetetur elaboraret an. Ne vis elitr albucius assentior, summo tacimates mel ea. Mel te ignota vulputate. Alii accommodare ex mei, in dicat facete iracundia sed, mel ea possit inimicus. Per ut solum vituperatoribus, vide facer populo qui eu. Nam et aliquid honestatis, an democritum philosophia has. In pri eripuit admodum. An vel tota error democritum, nam ut solet tantas eruditi. Ea est electram explicari, no eam tale discere. Dicant nullam iudicabit eam ea. Vim ea purto contentiones, vidit tacimates assueverit ad eum. Sit munere dictas accumsan id, sit wisi posse ridens in, primis tacimates et mei.',
             'published' => true,
             'published_at' => DB::raw('CURRENT_TIMESTAMP')
+        ]);
+
+    }
+}
+
+class UsersTableSeeder extends Seeder {
+
+    public function run()
+    {
+        DB::table('users')->delete();
+        DB::statement("ALTER TABLE users AUTO_INCREMENT=1");
+
+        User::create([
+          'name' => 'bot',
+          'email' => 'bot@mail.com',
+          'password' => bcrypt(str_random(10)),
+          'remember_token' => str_random(10),
         ]);
 
     }

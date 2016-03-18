@@ -16,9 +16,9 @@ class Comment extends Model
       'text','user_id','news_id'
     ];
 
-    public static $rules = array(
+    public static $rules = [
       'text' => 'required|min:10',
-    );
+    ];
 
     //comments table in database
     protected $guarded = [];
@@ -54,5 +54,11 @@ class Comment extends Model
             News::find($model->news_id)->decrement('col_comment');
             return true;
         });
+    }
+
+
+    public  function getRules()
+    {
+        return static::$rules;
     }
 }
